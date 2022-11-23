@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class TENIC {
     static JFrame  mJFrame = new JFrame("Tenic Survival");
-    static int pnum = 0;
     static String namef1 ="";
     static String job11="";
     static int age1=0;
@@ -100,7 +99,6 @@ public class TENIC {
                 mJFrame.getContentPane().removeAll();
                 mJFrame.getContentPane().repaint();
                 mJFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-                pnum = 1;
                 part1();
             }
 
@@ -143,7 +141,13 @@ public class TENIC {
                 txtarea.replaceSelection("");
                 txtarea.append("\n\n\n<<<<<<<<<<<<<<<<<<<<<<<<<DONE>>>>>>>>>>>>>>>>>>>>>>>>>>   ");
                 txtarea.append("\n\n\n<<<<<<<<WELCOME sir" + namef1 + " " + age1 + ">>>>>>>\n Everyone here in Tenica has been anxiously awaiting your arrival...");
-                ActionListener listener1 = event -> part2();
+                ActionListener listener1 = event ->{
+                    mJFrame.getContentPane().removeAll();
+                    mJFrame.getContentPane().repaint();
+                    mJFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+                 part2();
+
+                } ;
                 Timer timer1 = new Timer(7000, listener1);
                 timer1.start();
 
@@ -159,7 +163,14 @@ public class TENIC {
     }
 
     public static void part2(){
-
+        JTextArea txtarea = new JTextArea();
+        txtarea.setBackground(Color.black);
+        txtarea.setForeground(Color.green);
+        txtarea.setAlignmentX(Component.LEFT_ALIGNMENT);
+        mJFrame.add(txtarea);
+        //JScrollPane scrollPane = new JScrollPane(txtarea);
+        //mJFrame.getContentPane().add(scrollPane);
+        txtarea.append("hello you kinky");
 
 
     }
