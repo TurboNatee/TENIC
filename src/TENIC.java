@@ -143,6 +143,9 @@ public class TENIC {
                 txtarea.replaceSelection("");
                 txtarea.append("\n\n\n<<<<<<<<<<<<<<<<<<<<<<<<<DONE>>>>>>>>>>>>>>>>>>>>>>>>>>   ");
                 txtarea.append("\n\n\n<<<<<<<<WELCOME sir" + namef1 + " " + age1 + ">>>>>>>\n Everyone here in Tenica has been anxiously awaiting your arrival...");
+                ActionListener listener1 = event -> part2();
+                Timer timer1 = new Timer(7000, listener1);
+                timer1.start();
 
             }
         };
@@ -150,6 +153,12 @@ public class TENIC {
         Timer timer = new Timer( 100, listener );
         timer.start();
 
+
+
+
+    }
+
+    public static void part2(){
 
 
 
