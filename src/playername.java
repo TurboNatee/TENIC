@@ -1,10 +1,7 @@
 public class playername {
     String name, profession;
     int age;
-    playername(){
 
-
-    }
 
     playername(String name, String profession, int age){
       setAge(age);
