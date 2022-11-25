@@ -3,10 +3,10 @@ public class playername {
     int age;
 
 
-    playername(String name, String profession, int age){
-      setAge(age);
-      setName(name);
-      setProfession(profession);
+    playername(String name, String profession, int age) {
+        setAge(age);
+        setName(name);
+        setProfession(profession);
 
     }
 
