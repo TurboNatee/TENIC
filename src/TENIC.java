@@ -7,7 +7,8 @@ import java.util.ArrayList;
  * to see examples on how to use things such as timers and how to move things in a jframe by setting bounds to objects
  */
 
-public class TENIC {
+public class
+TENIC {
     /**
      * create j frame
      */

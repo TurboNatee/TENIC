@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class TENIC {
+    +static JFrame mJFrame
+    +static String namef1
+    +static String job11
+    +static int age1
+    +static int block
+    +static boolean secret
+    +static ArrayList<String> objects
+    --
+    +static void main(String[] args)
+    +static void startscreen()
+}
+
+class playername {
+    -String name
+    -String profession
+    -int age
+    --
+    +playername(name: String, profession: String, age: int)
+    +getName(): String
+    +getProfession(): String
+    +getAge(): int
+    +setName(name: String)
+    +setProfession(profession: String)
+    +setAge(age: int)
+    +toString(): String
+}
+
+class part1 {
+    +static void part1method()
+}
+
+class part2 {
+    +static void part2methods()
+    +static void diereset()
+}
+
+TENIC --> part1 : calls
+TENIC --> part2 : calls
+TENIC --> playername : creates
+part1 --> part2 : calls part2methods()
+@enduml
