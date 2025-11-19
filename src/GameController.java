@@ -5,13 +5,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class gameController {
+public class GameController {
 
-    private final gameContext context;
+    private final GameContext context;
 
-    public gameController() {
+    public GameController() {
         JSONObject story = loadStory("src/main-story.json");
-        this.context = new gameContext(story, "start");
+        this.context = new GameContext(story, "start");
 
     }
 

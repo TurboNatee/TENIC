@@ -1,11 +1,11 @@
 import org.json.JSONObject;
 
-public class jsonState extends gameState {
+public class JsonState extends GameState {
 
     private final String description;
     private final JSONObject commands;
 
-    public jsonState(JSONObject json) {
+    public JsonState(JSONObject json) {
         this.description = json.getString("description");
         this.commands = json.getJSONObject("commands");
     }
@@ -15,7 +15,7 @@ public class jsonState extends gameState {
     }
 
     @Override
-    public String handleCommand(String input, gameContext context) {
+    public String handleCommand(String input, GameContext context) {
         input = input.toLowerCase();
 
         if (!commands.has(input)) {

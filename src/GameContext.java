@@ -1,13 +1,16 @@
 import org.json.JSONObject;
 
-public class gameContext {
+public class GameContext {
 
     private final JSONObject story;
-    private String currentBlock;
-    private gameState currentState;
+    private final GameStateFactory stateFactory;
 
-    public gameContext(JSONObject story, String startBlock) {
+    private String currentBlock;
+    private GameState currentState;
+
+    public GameContext(JSONObject story, String startBlock, GameStateFactory stateFactory) {
         this.story = story;
+        this.stateFactory = stateFactory;
         this.currentBlock = startBlock;
         this.currentState = createState(startBlock);
     }
@@ -19,14 +22,9 @@ public class gameContext {
         }
     }
 
-    public String getDescriptionFor(String blockName) {
-        return story.getJSONObject(blockName).getString("description");
-    }
-
-
-    private gameState createState(String blockName) {
+    private GameState createState(String blockName) {
         JSONObject blockJson = story.getJSONObject(blockName);
-        return new jsonState(blockJson);
+        return stateFactory.createState(blockJson);
     }
 
     public String handleCommand(String input) {
@@ -38,8 +36,7 @@ public class gameContext {
     }
 
     public String getCurrentDescription() {
-        return currentState instanceof jsonState
-                ? ((jsonState) currentState).getDescription()
-                : "";
+        JSONObject blockJson = story.getJSONObject(currentBlock);
+        return blockJson.getString("description");
     }
 }

@@ -1,9 +1,9 @@
-public class playername {
+public class CreatePlayer {
     String name, profession;
     int age;
 
 
-    playername(String name, String profession, int age) {
+    CreatePlayer(String name, String profession, int age) {
         setAge(age);
         setName(name);
         setProfession(profession);
