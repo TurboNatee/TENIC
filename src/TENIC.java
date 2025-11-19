@@ -68,7 +68,12 @@ public class TENIC {
             boolean valid = validatePlayer(nameInput, jobInput, ageInput);
 
             if (valid) {
-                CreatePlayer player = new CreatePlayer(nameInput, jobInput, playerAge);
+                CreatePlayer player = new CreatePlayer.Builder()
+                        .withName(nameInput)
+                        .withProfession(jobInput)
+                        .withAge(playerAge)
+                        .build();
+
                 playerName = player.getName();
                 playerJob = player.getProfession();
                 playerAge = player.getAge();
@@ -79,6 +84,7 @@ public class TENIC {
 
                 WelcomeScreen.initializeGameUI();
             }
+
         });
     }
 
