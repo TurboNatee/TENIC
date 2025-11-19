@@ -31,7 +31,7 @@ public class JsonState extends GameState {
         context.setStateFromBlock(next);
 
         if (stateChanged) {
-            return response + "\n\n" + context.getDescriptionFor(next);
+            return response + "\n\n" + context.getCurrentDescription();
         }
 
         return response;

@@ -16,15 +16,18 @@ public class GameTerminalView {
     }
 
     public static void setupGameTerminalUI() {
+
         TENIC.mJFrame.getContentPane().removeAll();
         TENIC.mJFrame.getContentPane().repaint();
-        TENIC.mJFrame.setLayout(null);   // ← THE FIX
+        TENIC.mJFrame.setLayout(null);
 
-
-        GameController controller = new GameController();
+        GameEngineFacade engine = new GameEngineFacade();
 
         JTextArea outputArea = new JTextArea();
         outputArea.setEditable(false);
+        outputArea.setBackground(Color.black);
+        outputArea.setForeground(Color.green);
+
         JScrollPane outputScroll = new JScrollPane(outputArea);
         outputScroll.setBounds(0, 150, 450, 440);
         outputScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -32,18 +35,23 @@ public class GameTerminalView {
         outputScroll.setBorder(BorderFactory.createLineBorder(Color.black));
         outputScroll.getVerticalScrollBar().setBackground(Color.BLACK);
         outputScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
             protected void configureScrollBarColors() { this.thumbColor = Color.green; }
         });
 
-        TENIC.mJFrame.getContentPane().add(outputScroll);
+        TENIC.mJFrame.add(outputScroll);
 
-        for (int i = 0; i < 25; i++) outputArea.append("\n");
-        outputArea.append("Type help for help\n");
-        outputArea.setBackground(Color.black);
-        outputArea.setForeground(Color.green);
+        for (int i = 0; i < 20; i++) outputArea.append("\n");
+        outputArea.append("Type help for help\n\n");
+
+        outputArea.append(engine.getOpeningDescription() + "\n\n");
+
 
         JTextArea inventoryArea = new JTextArea();
         inventoryArea.setEditable(false);
+        inventoryArea.setBackground(Color.black);
+        inventoryArea.setForeground(Color.green);
+
         JScrollPane inventoryScroll = new JScrollPane(inventoryArea);
         inventoryScroll.setBounds(0, 0, 150, 150);
         inventoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -51,13 +59,13 @@ public class GameTerminalView {
         inventoryScroll.setBorder(BorderFactory.createLineBorder(Color.green));
         inventoryScroll.getVerticalScrollBar().setBackground(Color.BLACK);
         inventoryScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
             protected void configureScrollBarColors() { this.thumbColor = Color.green; }
         });
 
-        TENIC.mJFrame.getContentPane().add(inventoryScroll);
-        inventoryArea.setBackground(Color.black);
-        inventoryArea.setForeground(Color.green);
+        TENIC.mJFrame.add(inventoryScroll);
         inventoryArea.append(" INVENTORY\n");
+
 
         JTextField commandInput = new JTextField();
         commandInput.setBounds(25, 588, 420, 25);
@@ -67,31 +75,34 @@ public class GameTerminalView {
         commandInput.setBorder(BorderFactory.createLineBorder(Color.black));
         TENIC.mJFrame.add(commandInput);
 
+        // Cursor label >>>
         JLabel cursorLabel = new JLabel(">>>");
         cursorLabel.setBounds(1, 585, 30, 30);
         cursorLabel.setForeground(Color.green);
         cursorLabel.setBackground(Color.black);
         TENIC.mJFrame.add(cursorLabel);
 
+
         commandInput.addActionListener(e -> {
+
             String input = commandInput.getText().trim();
             commandInput.setText("");
 
             outputArea.append(TENIC.playerName + " >>> " + input + "\n");
 
             if (input.equalsIgnoreCase("clear")) {
-                for (int i = 0; i < 25; i++) outputArea.append("\n");
-                outputArea.append("Type help for help\n");
+                outputArea.setText("");
+                for (int i = 0; i < 20; i++) outputArea.append("\n");
+                outputArea.append("Type help for help\n\n");
                 return;
             }
 
-            String response = controller.processCommand(input);
+            String response = engine.handleCommand(input);
 
             if (response != null && !response.isEmpty()) {
-                outputArea.append(response + "\n");
+                outputArea.append(response + "\n\n");
             }
 
-            outputArea.append("\n");
             outputArea.setCaretPosition(outputArea.getDocument().getLength());
         });
 

@@ -11,13 +11,22 @@ public class GameController {
 
     public GameController() {
         JSONObject story = loadStory("src/main-story.json");
-        this.context = new GameContext(story, "start");
-
+        GameStateFactory factory = new GameStateFactory();
+        this.context = new GameContext(story, "start", factory);
     }
 
     public String getOpeningDescription() {
         return context.getCurrentDescription();
     }
+
+    public String processCommand(String input) {
+        return context.handleCommand(input);
+    }
+
+    public String getCurrentBlock() {
+        return context.getCurrentBlock();
+    }
+
 
 
     private JSONObject loadStory(String path) {
@@ -28,14 +37,6 @@ public class GameController {
         } catch (IOException e) {
             throw new RuntimeException("Failed to load story JSON from " + path, e);
         }
-    }
-
-    public String processCommand(String input) {
-        return context.handleCommand(input);
-    }
-
-    public String getCurrentBlock() {
-        return context.getCurrentBlock();
     }
 }
 
