@@ -15,6 +15,12 @@ public class GameController {
         this.context = new GameContext(story, "start", factory);
     }
 
+    public GameController(JSONObject story) {
+        GameStateFactory factory = new GameStateFactory();
+        this.context = new GameContext(story, "start", factory);
+    }
+
+
     public String getOpeningDescription() {
         return context.getCurrentDescription();
     }
