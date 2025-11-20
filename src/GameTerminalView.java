@@ -125,7 +125,6 @@ public class GameTerminalView {
                 outputArea.append(response + "\n\n");
             }
 
-            // 🔥 NEW — auto restart when reaching end=true
             if (engine.isEndState()) {
                 outputArea.append("GAME OVER. Restarting...\n");
                 GameTerminalView.resetGameAfterDeath();

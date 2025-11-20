@@ -1,0 +1,308 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > GameTerminalView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: GameTerminalView (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameTerminalView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/79)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GameTerminalView$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GameTerminalView$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/83)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javax.swing.*;
+&nbsp;import javax.swing.plaf.basic.BasicScrollBarUI;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;
+<b class="nc">&nbsp;public class GameTerminalView {</b>
+&nbsp;
+&nbsp;    public static void resetGameAfterDeath() {
+<b class="nc">&nbsp;        ActionListener listener = event -&gt; {</b>
+<b class="nc">&nbsp;            ((Timer) event.getSource()).stop();</b>
+&nbsp;
+&nbsp;            // reset player + inventory state
+<b class="nc">&nbsp;            TENIC.inventoryManager.clear();</b>
+<b class="nc">&nbsp;            TENIC.playerName = &quot;&quot;;</b>
+<b class="nc">&nbsp;            TENIC.playerJob = &quot;&quot;;</b>
+<b class="nc">&nbsp;            TENIC.playerAge = 0;</b>
+&nbsp;
+<b class="nc">&nbsp;            TENIC.mJFrame.getContentPane().removeAll();</b>
+<b class="nc">&nbsp;            TENIC.mJFrame.getContentPane().repaint();</b>
+<b class="nc">&nbsp;            TENIC.showStartScreen();</b>
+&nbsp;        };
+<b class="nc">&nbsp;        new Timer(6000, listener).start();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static void setupGameTerminalUI() {
+&nbsp;
+<b class="nc">&nbsp;        TENIC.mJFrame.getContentPane().removeAll();</b>
+<b class="nc">&nbsp;        TENIC.mJFrame.getContentPane().repaint();</b>
+<b class="nc">&nbsp;        TENIC.mJFrame.setLayout(null);</b>
+&nbsp;
+<b class="nc">&nbsp;        GameEngineFacade engine = new GameEngineFacade();</b>
+&nbsp;
+&nbsp;        // --- OUTPUT AREA ---
+<b class="nc">&nbsp;        JTextArea outputArea = new JTextArea();</b>
+<b class="nc">&nbsp;        outputArea.setEditable(false);</b>
+<b class="nc">&nbsp;        outputArea.setBackground(Color.black);</b>
+<b class="nc">&nbsp;        outputArea.setForeground(Color.green);</b>
+<b class="nc">&nbsp;        outputArea.setLineWrap(true);</b>
+<b class="nc">&nbsp;        outputArea.setWrapStyleWord(true);</b>
+&nbsp;
+<b class="nc">&nbsp;        JScrollPane outputScroll = new JScrollPane(outputArea);</b>
+<b class="nc">&nbsp;        outputScroll.setBounds(0, 150, 450, 440);</b>
+<b class="nc">&nbsp;        outputScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);</b>
+<b class="nc">&nbsp;        outputScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);</b>
+<b class="nc">&nbsp;        outputScroll.setBorder(BorderFactory.createLineBorder(Color.black));</b>
+<b class="nc">&nbsp;        outputScroll.getVerticalScrollBar().setBackground(Color.BLACK);</b>
+<b class="nc">&nbsp;        outputScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {</b>
+&nbsp;            @Override
+&nbsp;            protected void configureScrollBarColors() {
+<b class="nc">&nbsp;                this.thumbColor = Color.green;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        TENIC.mJFrame.add(outputScroll);</b>
+&nbsp;
+<b class="nc">&nbsp;        for (int i = 0; i &lt; 20; i++) outputArea.append(&quot;\n&quot;);</b>
+<b class="nc">&nbsp;        outputArea.append(&quot;Type help for help\n\n&quot;);</b>
+<b class="nc">&nbsp;        outputArea.append(engine.getOpeningDescription() + &quot;\n\n&quot;);</b>
+&nbsp;
+&nbsp;        // --- INVENTORY AREA ---
+<b class="nc">&nbsp;        JTextArea inventoryArea = new JTextArea();</b>
+<b class="nc">&nbsp;        inventoryArea.setEditable(false);</b>
+<b class="nc">&nbsp;        inventoryArea.setBackground(Color.black);</b>
+<b class="nc">&nbsp;        inventoryArea.setForeground(Color.green);</b>
+<b class="nc">&nbsp;        inventoryArea.setLineWrap(true);</b>
+<b class="nc">&nbsp;        inventoryArea.setWrapStyleWord(true);</b>
+&nbsp;
+<b class="nc">&nbsp;        JScrollPane inventoryScroll = new JScrollPane(inventoryArea);</b>
+<b class="nc">&nbsp;        inventoryScroll.setBounds(0, 0, 150, 150);</b>
+<b class="nc">&nbsp;        inventoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);</b>
+<b class="nc">&nbsp;        inventoryScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);</b>
+<b class="nc">&nbsp;        inventoryScroll.setBorder(BorderFactory.createLineBorder(Color.green));</b>
+<b class="nc">&nbsp;        inventoryScroll.getVerticalScrollBar().setBackground(Color.BLACK);</b>
+<b class="nc">&nbsp;        inventoryScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {</b>
+&nbsp;            @Override
+&nbsp;            protected void configureScrollBarColors() {
+<b class="nc">&nbsp;                this.thumbColor = Color.green;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        TENIC.mJFrame.add(inventoryScroll);</b>
+<b class="nc">&nbsp;        inventoryArea.setText(&quot; INVENTORY\n&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        TENIC.inventoryManager.addObserver(updatedList -&gt; {</b>
+<b class="nc">&nbsp;            inventoryArea.setText(&quot; INVENTORY\n&quot;);</b>
+<b class="nc">&nbsp;            for (String item : updatedList) {</b>
+<b class="nc">&nbsp;                inventoryArea.append(&quot;- &quot; + item + &quot;\n&quot;);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // --- INPUT FIELD ---
+<b class="nc">&nbsp;        JTextField commandInput = new JTextField();</b>
+<b class="nc">&nbsp;        commandInput.setBounds(25, 588, 420, 25);</b>
+<b class="nc">&nbsp;        commandInput.setBackground(Color.black);</b>
+<b class="nc">&nbsp;        commandInput.setForeground(Color.green);</b>
+<b class="nc">&nbsp;        commandInput.setCaretColor(Color.white);</b>
+<b class="nc">&nbsp;        commandInput.setBorder(BorderFactory.createLineBorder(Color.black));</b>
+<b class="nc">&nbsp;        TENIC.mJFrame.add(commandInput);</b>
+&nbsp;
+<b class="nc">&nbsp;        JLabel cursorLabel = new JLabel(&quot;&gt;&gt;&gt;&quot;);</b>
+<b class="nc">&nbsp;        cursorLabel.setBounds(1, 585, 30, 30);</b>
+<b class="nc">&nbsp;        cursorLabel.setForeground(Color.green);</b>
+<b class="nc">&nbsp;        cursorLabel.setBackground(Color.black);</b>
+<b class="nc">&nbsp;        TENIC.mJFrame.add(cursorLabel);</b>
+&nbsp;
+&nbsp;        // --- COMMAND HANDLING ---
+<b class="nc">&nbsp;        commandInput.addActionListener(e -&gt; {</b>
+<b class="nc">&nbsp;            String input = commandInput.getText().trim();</b>
+<b class="nc">&nbsp;            commandInput.setText(&quot;&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (input.isEmpty()) {</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            outputArea.append(TENIC.playerName + &quot; &gt;&gt;&gt; &quot; + input + &quot;\n&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (input.equalsIgnoreCase(&quot;clear&quot;)) {</b>
+<b class="nc">&nbsp;                outputArea.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;                for (int i = 0; i &lt; 20; i++) outputArea.append(&quot;\n&quot;);</b>
+<b class="nc">&nbsp;                outputArea.append(&quot;Type help for help\n\n&quot;);</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (input.equalsIgnoreCase(&quot;restart&quot;)) {</b>
+<b class="nc">&nbsp;                TENIC.main(null);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            String response = engine.handleCommand(input);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (response != null &amp;&amp; !response.isEmpty()) {</b>
+<b class="nc">&nbsp;                outputArea.append(response + &quot;\n\n&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            outputArea.setCaretPosition(outputArea.getDocument().getLength());</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        TENIC.mJFrame.setVisible(true);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-11-20 01:52</div>
+</div>
+</body>
+</html>

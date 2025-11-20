@@ -14,7 +14,7 @@ public class GameController {
         GameStateFactory factory = new GameStateFactory();
         this.context = new GameContext(story, "start", factory);
     }
-
+    //for testing purposes to take in fake story
     public GameController(JSONObject story) {
         GameStateFactory factory = new GameStateFactory();
         this.context = new GameContext(story, "start", factory);

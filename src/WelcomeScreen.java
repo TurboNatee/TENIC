@@ -58,7 +58,7 @@ public class WelcomeScreen {
                     GameTerminalView.setupGameTerminalUI();
                 };
 
-                new Timer(9000, proceedToTerminal).start();
+                new Timer(4000, proceedToTerminal).start();
             }
         };
 

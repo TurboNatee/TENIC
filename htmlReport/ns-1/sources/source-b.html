@@ -1,0 +1,183 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > WelcomeScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: WelcomeScreen (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WelcomeScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/35)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.util.Random;
+&nbsp;
+<b class="nc">&nbsp;public class WelcomeScreen {</b>
+&nbsp;
+&nbsp;    private static final int MIN_RANDOM = 20;
+&nbsp;    private static final int MAX_RANDOM = 40;
+&nbsp;    private static final int LOAD_CYCLES = 30;
+&nbsp;    private static final int LOAD_SPEED_MS = 70;
+&nbsp;
+&nbsp;    public static void initializeGameUI() {
+&nbsp;
+<b class="nc">&nbsp;        JTextArea loadingArea = new JTextArea();</b>
+<b class="nc">&nbsp;        loadingArea.setBackground(Color.black);</b>
+<b class="nc">&nbsp;        loadingArea.setForeground(Color.green);</b>
+&nbsp;
+<b class="nc">&nbsp;        TENIC.mJFrame.setLayout(new FlowLayout());</b>
+<b class="nc">&nbsp;        TENIC.mJFrame.add(loadingArea);</b>
+&nbsp;
+<b class="nc">&nbsp;        final StringBuilder randomLine = new StringBuilder();</b>
+<b class="nc">&nbsp;        final int[] counter = {0};</b>
+&nbsp;
+<b class="nc">&nbsp;        ActionListener loadStep = e -&gt; {</b>
+&nbsp;
+<b class="nc">&nbsp;            int length = new Random().nextInt(MAX_RANDOM - MIN_RANDOM + 1) + MIN_RANDOM;</b>
+&nbsp;
+<b class="nc">&nbsp;            for (int i = 0; i &lt; length; i++) {</b>
+<b class="nc">&nbsp;                char c = (char) (&#39;a&#39; + new Random().nextInt(26));</b>
+<b class="nc">&nbsp;                randomLine.append(c);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            randomLine.append(&quot;\n&quot;);</b>
+<b class="nc">&nbsp;            loadingArea.append(&quot;&lt;&lt;&lt;&lt;&lt; LOADING &gt;&gt;&gt;&gt;&gt;   &quot; + randomLine);</b>
+<b class="nc">&nbsp;            randomLine.setLength(0);</b>
+&nbsp;
+<b class="nc">&nbsp;            counter[0]++;</b>
+&nbsp;
+<b class="nc">&nbsp;            if (counter[0] &gt;= LOAD_CYCLES) {</b>
+<b class="nc">&nbsp;                ((Timer) e.getSource()).stop();</b>
+&nbsp;
+<b class="nc">&nbsp;                loadingArea.setText(&quot;&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                loadingArea.append(&quot;\n\n\n LOADING COMPLETE&quot;);</b>
+<b class="nc">&nbsp;                loadingArea.append(&quot;\n\n\n WELCOME TO TENIC\n&quot;);</b>
+<b class="nc">&nbsp;                loadingArea.append(&quot;\nLOGIN DETAILS\n______________\n\n&quot;);</b>
+<b class="nc">&nbsp;                loadingArea.append(TENIC.playerName + &quot;  age &quot; + TENIC.playerAge);</b>
+<b class="nc">&nbsp;                loadingArea.append(&quot;\n_______________\n&quot;);</b>
+<b class="nc">&nbsp;                loadingArea.append(&quot; Everyone here in Tenic has been anxiously awaiting your arrival...\n&quot;);</b>
+<b class="nc">&nbsp;                loadingArea.append(&quot; We need someone with the abilities of a &quot; + TENIC.playerJob + &quot;.\n&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                ActionListener proceedToTerminal = event -&gt; {</b>
+<b class="nc">&nbsp;                    ((Timer) event.getSource()).stop();</b>
+<b class="nc">&nbsp;                    TENIC.mJFrame.getContentPane().removeAll();</b>
+<b class="nc">&nbsp;                    TENIC.mJFrame.getContentPane().repaint();</b>
+<b class="nc">&nbsp;                    TENIC.mJFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);</b>
+<b class="nc">&nbsp;                    GameTerminalView.setupGameTerminalUI();</b>
+&nbsp;                };
+&nbsp;
+<b class="nc">&nbsp;                new Timer(9000, proceedToTerminal).start();</b>
+&nbsp;            }
+&nbsp;        };
+&nbsp;
+<b class="nc">&nbsp;        new Timer(LOAD_SPEED_MS, loadStep).start();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-11-20 01:52</div>
+</div>
+</body>
+</html>
