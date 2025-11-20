@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class TENIC {
+
+    static boolean testMode = false;
+
 
     static final JFrame mJFrame = new JFrame("Tenic Survival");
 
@@ -10,12 +12,9 @@ public class TENIC {
     static String playerJob = "";
     static int playerAge = 0;
 
-    static final ArrayList<String> inventory = new ArrayList<>();
+    static final InventoryManager inventoryManager = new InventoryManager();
 
     public static void main(String[] args) {
-        inventory.add("secretslist");
-        inventory.add("baseball bat");
-
         setupMainFrame();
         showStartScreen();
     }
@@ -45,6 +44,7 @@ public class TENIC {
         JTextField txtAge = new JTextField("", 35);
         JTextField txtJob = new JTextField("", 35);
 
+        mJFrame.getContentPane().removeAll();
         mJFrame.setLayout(new FlowLayout());
         mJFrame.add(lblName);
         mJFrame.add(txtName);
@@ -56,14 +56,9 @@ public class TENIC {
         mJFrame.setVisible(true);
 
         startButton.addActionListener(e -> {
-
-
             String nameInput = txtName.getText();
             String ageInput = txtAge.getText();
             String jobInput = txtJob.getText();
-
-
-
 
             boolean valid = validatePlayer(nameInput, jobInput, ageInput);
 
@@ -84,28 +79,35 @@ public class TENIC {
 
                 WelcomeScreen.initializeGameUI();
             }
-
         });
     }
 
-    public static boolean validatePlayer(String nameInput, String jobInput, String ageInput){
+    public static boolean validatePlayer(String nameInput, String jobInput, String ageInput) {
         boolean valid = true;
-        if (nameInput.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Invalid name.", "NAME ERROR", JOptionPane.ERROR_MESSAGE);
+
+        if (nameInput == null || nameInput.trim().isEmpty()) {
+            if(!testMode) {
+                JOptionPane.showMessageDialog(null, "Invalid name.", "NAME ERROR", JOptionPane.ERROR_MESSAGE);
+            }
             valid = false;
         }
 
         try {
-            playerAge = Integer.parseInt(ageInput);
+            playerAge = Integer.parseInt(ageInput.trim());
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(null, "Age must be a number.", "AGE ERROR", JOptionPane.ERROR_MESSAGE);
+            if(!testMode) {
+                JOptionPane.showMessageDialog(null, "Age must be a number.", "AGE ERROR", JOptionPane.ERROR_MESSAGE);
+            }
             valid = false;
         }
 
-        if (jobInput.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Invalid job.", "JOB ERROR", JOptionPane.ERROR_MESSAGE);
+        if (jobInput == null || jobInput.trim().isEmpty()) {
+            if(!testMode) {
+                JOptionPane.showMessageDialog(null, "Invalid job.", "JOB ERROR", JOptionPane.ERROR_MESSAGE);
+            }
             valid = false;
         }
+
         return valid;
     }
 }

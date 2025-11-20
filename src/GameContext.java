@@ -15,16 +15,16 @@ public class GameContext {
         this.currentState = createState(startBlock);
     }
 
-    public void setStateFromBlock(String blockName) {
-        if (story.has(blockName)) {
-            this.currentBlock = blockName;
-            this.currentState = createState(blockName);
-        }
-    }
-
     private GameState createState(String blockName) {
         JSONObject blockJson = story.getJSONObject(blockName);
         return stateFactory.createState(blockJson);
+    }
+
+    public void setStateFromBlock(String blockName) {
+        if (story.has(blockName)) {
+            currentBlock = blockName;
+            currentState = createState(blockName);
+        }
     }
 
     public String handleCommand(String input) {
@@ -36,7 +36,10 @@ public class GameContext {
     }
 
     public String getCurrentDescription() {
-        JSONObject blockJson = story.getJSONObject(currentBlock);
-        return blockJson.getString("description");
+        return story.getJSONObject(currentBlock).getString("description");
+    }
+
+    public boolean isCurrentStateEnd() {
+        return currentState instanceof JsonState && ((JsonState) currentState).isEndState();
     }
 }

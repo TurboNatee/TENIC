@@ -1,139 +1,212 @@
 {
   "start": {
-    "description": "The terminal sputters to life. Lines of corrupted text rain down the screen.\n\n\"BOOT ERROR: MEMORY SECTOR 7 — IRRECOVERABLE.\"\n\"UNKNOWN USER CONNECTED.\"\n\nA cold current of air crawls across your neck.\nYou don’t remember turning this terminal on.\n\nType \"begin\" to continue.",
+    "description": "You awaken inside a dim, concrete hallway. The lights above flicker violently. A low humming echoes through the walls. A cold draft crawls across your skin.\n\nAhead of you lies a rusted metal door. Behind you, darkness stretches endlessly.",
     "commands": {
       "help": {
-        "response": "Available commands:\n- begin",
+        "response": "Available commands: look, forward, back",
         "next": "start"
       },
-      "begin": {
-        "response": "Reconstructing session fragments…\nDecoding timeline…\n\nWARNING: Facility integrity compromised.\nWARNING: Psychological drift detected in USER.\n\nYour assigned location loads:\n\"Corridor 3 — Outer Perimeter.\"",
-        "next": "corridor_entry"
-      }
-    }
-  },
-
-  "corridor_entry": {
-    "description": "The corridor stretches endlessly, lit only by glitching red emergency strips.\nThe air smells faintly metallic… like blood.\nA security camera overhead pivots toward you, even though no power should be running.\n\nSomething scratches behind the wall.\n\nYou notice a **maintenance badge** lying on the floor.\n\nCommands:\n- forward\n- inspect badge\n- listen\n- help",
-    "commands": {
-      "help": {
-        "response": "Available commands:\n- forward\n- inspect badge\n- listen",
-        "next": "corridor_entry"
-      },
-      "inspect badge": {
-        "response": "You pick up the badge. It's cracked, but readable:\n\"DR. ELLA ROURKE — Cognitive Division.\"\nOn the back someone scratched:\n\"DON'T TRUST YOUR MEMORIES.\"",
-        "next": "corridor_entry"
-      },
-      "listen": {
-        "response": "You press your ear to the wall.\nThe scratching stops.\nThen…\nA whisper:\n\"You're early.\"",
-        "next": "corridor_entry"
+      "look": {
+        "response": "The hallway is abandoned... but something on the ground catches your eye — a small metal object glinting in the flickering light. You pick it up.",
+        "next": "start",
+        "addItem": ["strange_key"]
       },
       "forward": {
-        "response": "You move ahead. Every step echoes twice.\nOne echo isn't yours.",
-        "next": "junction"
+        "response": "You push the rusted metal door — it screeches open, revealing a stairwell spiraling downward.",
+        "next": "stairwell"
+      },
+      "back": {
+        "response": "You step back… the darkness seems to breathe, swallowing all sound.",
+        "next": "darkness"
       }
-    }
+    },
+    "end": "false"
   },
 
-  "junction": {
-    "description": "The hall divides.\nThe left path is cold enough to fog your breath.\nThe right path hums with faint static.\n\nA message flickers on a malfunctioning screen:\n\"SUBJECT EXIT ATTEMPT DETECTED — CONTAINMENT PROTOCOL ACTIVE.\"\n\nCommands:\n- left\n- right\n- check screen\n- help",
+  "stairwell": {
+    "description": "The stairwell is drenched in shadow. Each step creaks under your weight. A red EXIT sign flickers far below, but a whisper floats from a side doorway halfway down.",
     "commands": {
       "help": {
-        "response": "Available commands:\n- left (toward cold storage)\n- right (toward research wing)\n- check screen",
-        "next": "junction"
+        "response": "Available commands: down, side, listen",
+        "next": "stairwell"
       },
-      "check screen": {
-        "response": "The screen loops distorted footage.\nYou see a silhouette walking these halls.\nIt looks like you.\nBut the timestamp is from **two hours ahead**.",
-        "next": "junction"
+      "down": {
+        "response": "You descend cautiously. The EXIT sign glows brighter… until it abruptly shuts off.",
+        "next": "exit_hall"
       },
-      "left": {
-        "response": "Your skin prickles instantly. The temperature drops sharply.\nA dull rhythmic pounding echoes from ahead.",
-        "next": "cold_storage"
+      "side": {
+        "response": "You open the side door — inside, something metallic glints on a dusty table. You take it without thinking.",
+        "next": "storage_room",
+        "addItem": ["rusty_knife"]
       },
-      "right": {
-        "response": "Static grows louder. Lights flicker violently.\nSomething metallic scrapes across the floor in the distance.",
-        "next": "research_wing"
+      "listen": {
+        "response": "You hold still. The whisper forms words: 'Don't look behind you…'",
+        "next": "stairwell"
       }
-    }
+    },
+    "end": "false"
   },
 
-  "cold_storage": {
-    "description": "Frost coats the walls.\nRows of cryo-pods line the chamber — most shattered from the inside.\nOne pod remains intact.\nIts monitor displays a name.\n\n\"USER — STATUS: UNRESPONSIVE\"\n\nCommands:\n- inspect pod\n- read logs\n- leave\n- help",
+  "storage_room": {
+    "description": "The room is cramped, filled with old broken machinery and shattered light fixtures. A foul smell leaks from a vent.",
     "commands": {
       "help": {
-        "response": "Available commands:\n- inspect pod\n- read logs\n- leave",
-        "next": "cold_storage"
+        "response": "Available commands: inspect vent, leave",
+        "next": "storage_room"
       },
-      "inspect pod": {
-        "response": "You wipe frost from the glass.\nYour own face stares back at you.\nSleeping.\n\nThe heartbeat monitor spikes as your real pulse races.",
-        "next": "cold_storage"
-      },
-      "read logs": {
-        "response": "Log Entry 12:\n\"Subject exhibits memory fragmentation and identity splitting.\"\nLog Entry 13:\n\"Subject insists they are awake — delusion persists despite proof.\"",
-        "next": "cold_storage"
+      "inspect vent": {
+        "response": "You kneel to inspect the vent — a skeletal hand suddenly drops out and lands beside you… clutching a torn journal page.",
+        "next": "storage_room",
+        "addItem": ["journal_page"]
       },
       "leave": {
-        "response": "You step back toward the junction.\nThe heartbeat monitor abruptly flatlines behind you.",
-        "next": "junction"
+        "response": "You step back into the stairwell, shaken.",
+        "next": "stairwell"
       }
-    }
+    },
+    "end": "false"
   },
 
-  "research_wing": {
-    "description": "This wing is demolished. Claw marks gouge the metal.\nScreens flash corrupted text:\n\"THEY ARE NOT DECEASED\"\n\"THEY REMEMBER YOU\"\n\"RUN\"\n\nCommands:\n- inspect debris\n- check monitors\n- follow noise\n- help",
+  "exit_hall": {
+    "description": "You reach a broken corridor. Emergency lights pulse red. Blood smears trail across the walls toward a collapsed section of ceiling.",
     "commands": {
       "help": {
-        "response": "Available commands:\n- inspect debris\n- check monitors\n- follow noise",
-        "next": "research_wing"
+        "response": "Available commands: follow blood, left, right",
+        "next": "exit_hall"
       },
-      "inspect debris": {
-        "response": "You uncover a broken recorder.\nIt plays a woman's panicked voice:\n\"If you see it wearing your face — DO NOT SPEAK TO IT.\"\nThe message cuts off mid-scream.",
-        "next": "research_wing"
+      "follow blood": {
+        "response": "You follow the trail and notice a battered tool belt hanging from a broken pipe. You take what you can.",
+        "next": "collapsed_corridor",
+        "addItem": ["crowbar"]
       },
-      "check monitors": {
-        "response": "One monitor stabilizes.\nYou see a live feed of the corridor behind you.\nSomething is standing there.\nPerfectly still.\nFace hidden in shadow.",
-        "next": "research_wing"
+      "left": {
+        "response": "You turn left and hear something huge dragging metal deeper inside.",
+        "next": "machine_room"
       },
-      "follow noise": {
-        "response": "The noise grows louder… wet, rhythmic, hungry.\nThe lights go out.\nSomething breathes inches from your ear.",
-        "next": "final_passage"
+      "right": {
+        "response": "A dead-end… but a backpack slumps against the wall. Inside, you find something helpful.",
+        "next": "exit_hall",
+        "addItem": ["flashlight"]
       }
-    }
+    },
+    "end": "false"
   },
 
-  "final_passage": {
-    "description": "Alarms distort into warped, metallic shrieks.\nA silhouette stands ahead.\nIt tilts its head — exactly the way you do.\n\nCommands:\n- ask \"what are you?\"\n- run\n- help",
+  "collapsed_corridor": {
+    "description": "The ceiling has collapsed, blocking the path. But a large crack splits the wall — something shuffles inside the darkness of that narrow space.",
     "commands": {
       "help": {
-        "response": "Available commands:\n- ask \"what are you?\"\n- run",
-        "next": "final_passage"
+        "response": "Available commands: use crowbar, call out",
+        "next": "collapsed_corridor"
       },
-      "ask \"what are you?\"": {
-        "response": "It steps forward.\nIts voice is your voice.\n\n\"I am what you left behind in the pod.\"\n\nThe walls around you melt into darkness.",
-        "next": "ending"
+      "use crowbar": {
+        "response": "You wedge the crowbar into the cracked wall — the stone gives way, revealing a hidden maintenance tunnel.",
+        "next": "tunnel"
+      },
+      "call out": {
+        "response": "You call into the crack… the shuffling stops… then moves rapidly toward you.",
+        "next": "death"
+      }
+    },
+    "end": "false"
+  },
+
+  "machine_room": {
+    "description": "You enter a massive industrial chamber filled with broken generators and hanging chains. Something metallic is breathing in the dark.",
+    "commands": {
+      "help": {
+        "response": "Available commands: explore, run",
+        "next": "machine_room"
+      },
+      "explore": {
+        "response": "You move between the generators — finding a glowing battery pack on the floor. You pocket it.",
+        "next": "machine_room",
+        "addItem": ["battery_pack"]
       },
       "run": {
-        "response": "You sprint blindly.\nFootsteps match yours perfectly.\nYou collide with something solid — a terminal.\nThe same terminal you started at.",
-        "next": "ending"
+        "response": "You sprint away — chains rattle violently behind you.",
+        "next": "exit_hall"
       }
-    }
+    },
+    "end": "false"
+  },
+
+  "tunnel": {
+    "description": "The maintenance tunnel is cramped, damp, and reeks of mold. But ahead, you see a faint white light.",
+    "commands": {
+      "help": {
+        "response": "Available commands: forward, back",
+        "next": "tunnel"
+      },
+      "forward": {
+        "response": "You crawl toward the light… only to find a locked hatch.",
+        "next": "hatch"
+      },
+      "back": {
+        "response": "You return to the collapsed corridor.",
+        "next": "collapsed_corridor"
+      }
+    },
+    "end": "false"
+  },
+
+  "hatch": {
+    "description": "The hatch is sealed shut with a heavy lock. A symbol engraved on it matches the strange key you found earlier.",
+    "commands": {
+      "help": {
+        "response": "Available commands: use key, knock",
+        "next": "hatch"
+      },
+      "use key": {
+        "response": "You insert the strange key — the hatch unlocks with a thunderous clang. A blinding light floods the tunnel.",
+        "next": "ending"
+      },
+      "knock": {
+        "response": "Something knocks back. Hard.",
+        "next": "hatch"
+      }
+    },
+    "end": "false"
+  },
+
+  "darkness": {
+    "description": "You step backward into the dark… your vision dissolves… your heartbeat slows… something cold grabs your wrist.",
+    "commands": {
+      "help": {
+        "response": "Available commands: scream, run",
+        "next": "darkness"
+      },
+      "scream": {
+        "response": "Your scream is swallowed by the void.",
+        "next": "death"
+      },
+      "run": {
+        "response": "You stumble forward — back into the hallway.",
+        "next": "start"
+      }
+    },
+    "end": "false"
+  },
+
+  "death": {
+    "description": "A shadow envelops you. Your body freezes. Your vision fades to black.\n\nYou have died.",
+    "commands": {
+      "help": {
+        "response": "There are no commands. You are dead.",
+        "next": "death"
+      }
+    },
+    "end": "true"
   },
 
   "ending": {
-    "description": "The world dissolves, leaving only the terminal glow.\nA final message prints slowly:\n\n\"YOU WERE NEVER THE OBSERVER.\nYOU WERE THE EXPERIMENT.\nTHE FACILITY EXISTS ONLY IN YOUR FRACTURED MEMORY.\"\n\nCommands:\n- accept\n- deny\n- help",
+    "description": "You crawl through the open hatch and emerge outside into a cold, moonlit forest.\n\nThe facility stands behind you, sirens wailing. Whatever was inside… is no longer your concern.\n\nYou survived.",
     "commands": {
       "help": {
-        "response": "Available commands:\n- accept\n- deny",
-        "next": "ending"
-      },
-      "accept": {
-        "response": "Your vision fades.\nThe heartbeat slows… slows…\nUntil it matches the one in Cold Storage.\n\nSESSION COMPLETE.",
-        "next": "ending"
-      },
-      "deny": {
-        "response": "Static explodes across the screen.\nThe world buckles.\nYour heartbeat spikes — then cuts.\n\nSESSION FAILED.",
+        "response": "There are no commands. You have escaped.",
         "next": "ending"
       }
-    }
+    },
+    "end": "true"
   }
 }

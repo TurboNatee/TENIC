@@ -27,7 +27,9 @@ public class GameController {
         return context.getCurrentBlock();
     }
 
-
+    public boolean isCurrentStateEnd() {
+        return context.isCurrentStateEnd();
+    }
 
     private JSONObject loadStory(String path) {
         try {
@@ -39,4 +41,3 @@ public class GameController {
         }
     }
 }
-

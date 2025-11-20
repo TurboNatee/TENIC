@@ -8,6 +8,13 @@ public class GameTerminalView {
     public static void resetGameAfterDeath() {
         ActionListener listener = event -> {
             ((Timer) event.getSource()).stop();
+
+            // reset player + inventory state
+            TENIC.inventoryManager.clear();
+            TENIC.playerName = "";
+            TENIC.playerJob = "";
+            TENIC.playerAge = 0;
+
             TENIC.mJFrame.getContentPane().removeAll();
             TENIC.mJFrame.getContentPane().repaint();
             TENIC.showStartScreen();
@@ -23,10 +30,13 @@ public class GameTerminalView {
 
         GameEngineFacade engine = new GameEngineFacade();
 
+        // --- OUTPUT AREA ---
         JTextArea outputArea = new JTextArea();
         outputArea.setEditable(false);
         outputArea.setBackground(Color.black);
         outputArea.setForeground(Color.green);
+        outputArea.setLineWrap(true);
+        outputArea.setWrapStyleWord(true);
 
         JScrollPane outputScroll = new JScrollPane(outputArea);
         outputScroll.setBounds(0, 150, 450, 440);
@@ -36,21 +46,24 @@ public class GameTerminalView {
         outputScroll.getVerticalScrollBar().setBackground(Color.BLACK);
         outputScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
-            protected void configureScrollBarColors() { this.thumbColor = Color.green; }
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.green;
+            }
         });
 
         TENIC.mJFrame.add(outputScroll);
 
         for (int i = 0; i < 20; i++) outputArea.append("\n");
         outputArea.append("Type help for help\n\n");
-
         outputArea.append(engine.getOpeningDescription() + "\n\n");
 
-
+        // --- INVENTORY AREA ---
         JTextArea inventoryArea = new JTextArea();
         inventoryArea.setEditable(false);
         inventoryArea.setBackground(Color.black);
         inventoryArea.setForeground(Color.green);
+        inventoryArea.setLineWrap(true);
+        inventoryArea.setWrapStyleWord(true);
 
         JScrollPane inventoryScroll = new JScrollPane(inventoryArea);
         inventoryScroll.setBounds(0, 0, 150, 150);
@@ -60,13 +73,22 @@ public class GameTerminalView {
         inventoryScroll.getVerticalScrollBar().setBackground(Color.BLACK);
         inventoryScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
-            protected void configureScrollBarColors() { this.thumbColor = Color.green; }
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.green;
+            }
         });
 
         TENIC.mJFrame.add(inventoryScroll);
-        inventoryArea.append(" INVENTORY\n");
+        inventoryArea.setText(" INVENTORY\n");
 
+        TENIC.inventoryManager.addObserver(updatedList -> {
+            inventoryArea.setText(" INVENTORY\n");
+            for (String item : updatedList) {
+                inventoryArea.append("- " + item + "\n");
+            }
+        });
 
+        // --- INPUT FIELD ---
         JTextField commandInput = new JTextField();
         commandInput.setBounds(25, 588, 420, 25);
         commandInput.setBackground(Color.black);
@@ -75,18 +97,18 @@ public class GameTerminalView {
         commandInput.setBorder(BorderFactory.createLineBorder(Color.black));
         TENIC.mJFrame.add(commandInput);
 
-        // Cursor label >>>
         JLabel cursorLabel = new JLabel(">>>");
         cursorLabel.setBounds(1, 585, 30, 30);
         cursorLabel.setForeground(Color.green);
         cursorLabel.setBackground(Color.black);
         TENIC.mJFrame.add(cursorLabel);
 
-
+        // --- COMMAND HANDLING ---
         commandInput.addActionListener(e -> {
-
             String input = commandInput.getText().trim();
             commandInput.setText("");
+
+            if (input.isEmpty()) return;
 
             outputArea.append(TENIC.playerName + " >>> " + input + "\n");
 
@@ -103,8 +125,15 @@ public class GameTerminalView {
                 outputArea.append(response + "\n\n");
             }
 
+            // 🔥 NEW — auto restart when reaching end=true
+            if (engine.isEndState()) {
+                outputArea.append("GAME OVER. Restarting...\n");
+                GameTerminalView.resetGameAfterDeath();
+            }
+
             outputArea.setCaretPosition(outputArea.getDocument().getLength());
         });
+
 
         TENIC.mJFrame.setVisible(true);
     }

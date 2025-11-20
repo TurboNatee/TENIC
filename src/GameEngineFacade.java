@@ -17,4 +17,8 @@ public class GameEngineFacade {
     public String getCurrentBlock() {
         return controller.getCurrentBlock();
     }
+
+    public boolean isEndState() {
+        return controller.isCurrentStateEnd();
+    }
 }
